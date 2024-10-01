@@ -29,7 +29,7 @@ entity:file p:10+ engines:ransom
 ```
 
 Searching for any filenames starting the string mimi <br>
-_(the "entity:file" modifer is not required as the modifier "name" implies searching through the File corpus, but is included for clarity and consistency sake)_
+_(the "entity:file" modifer is not required as the modifier "name" implies searching through the File corpus, but is included for clarity and consistency)_
 
 ```
 entity:file name:mimi* 
@@ -65,6 +65,11 @@ behaviour:"time.microsoft.com"
 Files communicating with time.microsoft.com (alternative method that's more precise)
 ```
 behaviour_network:"time.microsoft.com"
+```
+
+Files observed with macros (or VBA)
+```
+(tag:macros OR tag:vba) have:behaviour_network
 ```
 
 ## Hunting with Content Searches 
