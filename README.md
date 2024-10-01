@@ -79,6 +79,17 @@ Files communicating with microsoft.com (alternative method that's more precise)
 behaviour_network:"microsoft.com"
 ```
 
+Suspicious powershell useage
+```
+behaviour_files:"-enc" OR behaviour_files:"FromBase64String"
+```
+
+Suspicious LOLbins
+```
+behaviour_processes:"certutil -urlcache -split -f http"
+behaviour_processes:"mshta *.hta"
+```
+
 ## Brand / Domain Monitoring
 
 Searching for any URLs that have been categorised or detected as phishing
