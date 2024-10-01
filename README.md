@@ -119,7 +119,7 @@ behaviour_command_executions:"Set-ItemProperty -Path 'HKLM:\System\CurrentContro
 behaviour_registry:"HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\UserAuthentication"
 ```
 
-Files that run specific processes
+Files that run specific processes <br>
 _(this example hunts for known ransomware behaviours - deleting shadow copies)_
 ```
 behaviour_processes:"\\vssadmin.exe delete shadows /all /quiet"
