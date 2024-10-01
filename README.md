@@ -60,6 +60,11 @@ Searching for all sliver samples last analysed in the past 14 days
 engines:sliver la:14d+
 ```
 
+Searching for trojans observed in Taiwan, with > 10 submissions, and >10 unique sources
+```
+engines:trojan AND submitter:tw AND submissions:10+ AND sources:10+
+```
+
 ## Hunting with Content Searches 
 
 Files with specific strings: 
@@ -114,6 +119,14 @@ behaviour_command_executions:"Set-ItemProperty -Path 'HKLM:\System\CurrentContro
 behaviour_registry:"HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\UserAuthentication"
 ```
 
+Files that run specific processes
+_(this example hunts for known ransomware behaviours - deleting shadow copies)_
+```
+behaviour_processes:"\\vssadmin.exe delete shadows /all /quiet"
+behaviour_processes:"\\vssadmin.exe resize shadowstorage"
+behaviour_command_executions:"Get-WmiObject Win32_Shadowcopy | ForEach-Object {$_.Delete();}" NOT engines:ransome
+```
+
 ## Brand / Domain Monitoring
 
 Searching for any URLs that have been categorised or detected as phishing
@@ -124,4 +137,15 @@ entity:url (engines:phishing or category:phishing)
 Searching for typo-squatting domains (leverging fuzzy searches) that looks like Googles but not from the legitimate Google domain
 ```
 entity:domain fuzzy_domain:google.com NOT parent_domain:google.com
+```
+
+Searching for websites that uses the same favicon as a brand's page:
+```
+entity:domain p:1+ main_icon_dhash:"f8e4f23369f0b2f0"
+entity: domain (fuzzy_domain:facebook.com OR main_icon_dhash:"f8e4f23369f0b2f0") NOT parent_domain:facebook.com 
+```
+
+Leveraging tags to hunt for multiple-redirects
+```
+entity:url tag:multiple-redirects (fuzzy_hostname:www.microsoft.com NOT (parent_domain:microsoft.com)) response_code:200
 ```
