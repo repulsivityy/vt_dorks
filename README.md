@@ -28,7 +28,7 @@ _modifier engines is use for malware family names, malware types (eg, info-steal
 entity:file p:10+ engines:ransom
 ```
 
-Searching for any filenames starting the string mimi <br>
+Searching for any filenames starting the string mimi\
 _(the "entity:file" modifer is not required as the modifier "name" implies searching through the File corpus, but is included for clarity and consistency sake)_
 
 ```
@@ -79,7 +79,7 @@ Files communicating with microsoft.com (alternative method that's more precise)
 behaviour_network:"microsoft.com"
 ```
 
-Suspicious powershell useage
+Suspicious powershell useage\
 _note that VT doesn't have parent-child links in the search modifiers. It could very well be a separate process in the search below, though rare_
 ```
 behaviour_files:"-enc" OR behaviour_files:"FromBase64String"
