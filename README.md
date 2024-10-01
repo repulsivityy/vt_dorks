@@ -29,7 +29,7 @@ entity:file p:10+ engines:ransom
 ```
 
 Searching for any filenames starting the string mimi <br>
-_(the "entity:file" modifer is not required as the modifier "name" implies searching through the File corpus, but is included for clarity and consistency)_
+_(the "entity:file" modifer is not required as the modifier "name" implies searching through the File corpus, but is included for clarity and consistency sake)_
 
 ```
 entity:file name:mimi* 
@@ -50,28 +50,6 @@ Searching for files weaponised that exploits any vulnerability in 2024 last seen
 tag:cve-2024-* ls:14d+ 
 ```
 
-## Hunting for files with network indicators
-
-Files hosted on a .gov with at least 5 detections
-```
-itw:"*.gov" p:5+
-```
-
-Files communicating with time.microsoft.com
-```
-behaviour:"time.microsoft.com"
-```
-
-Files communicating with time.microsoft.com (alternative method that's more precise)
-```
-behaviour_network:"time.microsoft.com"
-```
-
-Files observed with macros (or VBA)
-```
-(tag:macros OR tag:vba) have:behaviour_network
-```
-
 ## Hunting with Content Searches 
 
 Files with specific strings: 
@@ -82,6 +60,23 @@ content:"UploadSmallFileWithStopWatch"
 Content / Binary Seaches
 ```
 content:"{ 46 69 6C 65 43 6F 6E 74 61 69 6E 65 72 2E 46 69 6C 65 41 72 63 68 69 76 65 }"
+```
+
+## Behavioural hunting
+
+Files hosted on a .gov with at least 5 detections
+```
+itw:"*.gov" p:5+
+```
+
+Files communicating with time.microsoft.com
+```
+behaviour:"8.8.8.8"
+```
+
+Files communicating with microsoft.com (alternative method that's more precise)
+```
+behaviour_network:"microsoft.com"
 ```
 
 ## Brand / Domain Monitoring
