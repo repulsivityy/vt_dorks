@@ -22,13 +22,13 @@ Searching for files with at least 10 detections
 entity:file p:10+
 ```
 
-Searching for files with at least 10 detections that have been detected as ransomware
+Searching for files with at least 10 detections that have been detected as a malware (in this case, ransomware) <br>
 _modifier engines is use for malware family names, malware types (eg, info-stealers, trojans, etc), or malware categories_
 ```
 entity:file p:10+ engines:ransom
 ```
 
-Searching for any filenames starting the string mimi\
+Searching for any filenames starting the string _mimi_ <br>
 _(the "entity:file" modifer is not required as the modifier "name" implies searching through the File corpus, but is included for clarity and consistency sake)_
 
 ```
@@ -48,6 +48,16 @@ entity:file type:excel p:1+ p:5- tag:macros
 Searching for files weaponised that exploits any vulnerability in 2024 last seen in the past 14 days
 ```
 tag:cve-2024-* ls:14d+ 
+```
+
+Showing all lummac samples last seen in the past 7 days
+```
+engines:lummac ls:7d+
+```
+
+Searching for all sliver samples last analysed in the past 14 days
+```
+engines:sliver la:14d+
 ```
 
 ## Hunting with Content Searches 
@@ -79,8 +89,8 @@ Files communicating with microsoft.com (alternative method that's more precise)
 behaviour_network:"microsoft.com"
 ```
 
-Suspicious powershell useage\
-_note that VT doesn't have parent-child links in the search modifiers. It could very well be a separate process in the search below, though rare_
+Suspicious powershell useage <br>
+_(note that VT doesn't have parent-child links in the search modifiers. It could very well be a separate process in the search below, though rare)_
 ```
 behaviour_files:"-enc" OR behaviour_files:"FromBase64String"
 
@@ -90,9 +100,19 @@ behaviour_files:"-enc" OR behaviour_files:"FromBase64String"
 Suspicious LOLbins
 ```
 behaviour_processes:"certutil -urlcache -split -f http"
+
 behaviour_processes:"mshta *.hta"
+
+behaviour_created_processes: 
 ```
 
+Hunting for RDP misuse <br>
+_(enabling RDP, disabling NLA)_
+```
+behaviour_command_executions:"Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -value 0"
+
+behaviour_registry:"HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\UserAuthentication"
+```
 
 ## Brand / Domain Monitoring
 
