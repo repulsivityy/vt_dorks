@@ -62,7 +62,7 @@ Content / Binary Seaches
 content:"{ 46 69 6C 65 43 6F 6E 74 61 69 6E 65 72 2E 46 69 6C 65 41 72 63 68 69 76 65 }"
 ```
 
-## Behavioural hunting
+## Hunting Behaviours
 
 Files hosted on a .gov with at least 5 detections
 ```
