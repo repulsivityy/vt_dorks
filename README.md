@@ -123,7 +123,9 @@ Files that run specific processes
 _(this example hunts for known ransomware behaviours - deleting shadow copies)_
 ```
 behaviour_processes:"\\vssadmin.exe delete shadows /all /quiet"
+
 behaviour_processes:"\\vssadmin.exe resize shadowstorage"
+
 behaviour_command_executions:"Get-WmiObject Win32_Shadowcopy | ForEach-Object {$_.Delete();}" NOT engines:ransome
 ```
 
