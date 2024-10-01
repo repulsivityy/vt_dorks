@@ -144,6 +144,7 @@ entity:domain fuzzy_domain:google.com NOT parent_domain:google.com
 Searching for websites that uses the same favicon as a brand's page:
 ```
 entity:domain p:1+ main_icon_dhash:"f8e4f23369f0b2f0"
+
 entity: domain (fuzzy_domain:facebook.com OR main_icon_dhash:"f8e4f23369f0b2f0") NOT parent_domain:facebook.com 
 ```
 
