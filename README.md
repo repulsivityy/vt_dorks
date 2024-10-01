@@ -69,7 +69,7 @@ Files hosted on a .gov with at least 5 detections
 itw:"*.gov" p:5+
 ```
 
-Files communicating with time.microsoft.com
+Files communicating with IP address
 ```
 behaviour:"8.8.8.8"
 ```
@@ -80,8 +80,11 @@ behaviour_network:"microsoft.com"
 ```
 
 Suspicious powershell useage
+_note that VT doesn't have parent-child links in the search modifiers. It could very well be a separate process in the search below, though rare_
 ```
 behaviour_files:"-enc" OR behaviour_files:"FromBase64String"
+
+(behaviour_command_executions:powershell.exe AND (behaviour_created_processes:rundll32.exe OR behaviour_created_processes:powershell.exe))
 ```
 
 Suspicious LOLbins
@@ -89,6 +92,7 @@ Suspicious LOLbins
 behaviour_processes:"certutil -urlcache -split -f http"
 behaviour_processes:"mshta *.hta"
 ```
+
 
 ## Brand / Domain Monitoring
 
