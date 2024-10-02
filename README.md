@@ -105,30 +105,24 @@ behaviour_network:"microsoft.com"
 ```
 
 Suspicious powershell useage <br>
-_(note that VT doesn't have parent-child links in the search modifiers. It could very well be a separate process in the search below, though rare)_
 ```
 behaviour_files:"-enc" AND behaviour_files:"FromBase64String"
 ```
 
-Suspicious commands
+Suspicious command executions from powershell
+_(note that VT doesn't have parent-child links in the search modifiers. It could very well be a separate process in the search below, though rare)_
+```
 (behaviour_command_executions:powershell.exe AND (behaviour_created_processes:rundll32.exe OR behaviour_created_processes:powershell.exe))
+```
 
-
-Suspicious LOLbins
+Suspicious LOLbins - CertUtil
 ```
 behaviour_processes:"certutil -urlcache -split -f http"
+```
 
+Suspicious LOLbins - MSTHA
+```
 behaviour_processes:"mshta *.hta"
-
-behaviour_created_processes: 
-```
-
-Hunting for RDP misuse <br>
-_(enabling RDP, disabling NLA)_
-```
-behaviour_command_executions:"Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -value 0"
-
-behaviour_registry:"HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\UserAuthentication"
 ```
 
 Files that run specific processes <br>
@@ -140,6 +134,16 @@ behaviour_processes:"\\vssadmin.exe resize shadowstorage"
 
 behaviour_command_executions:"Get-WmiObject Win32_Shadowcopy | ForEach-Object {$_.Delete();}" NOT engines:ransome
 ```
+### RMM
+
+Enabling RDP
+```
+behaviour_command_executions:"Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -value 0"
+```
+
+RDP - Disabling NLA
+behaviour_registry:"HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\UserAuthentication"
+
 
 ## Brand / Domain Monitoring
 
