@@ -134,7 +134,8 @@ behaviour_processes:"\\vssadmin.exe resize shadowstorage"
 
 behaviour_command_executions:"Get-WmiObject Win32_Shadowcopy | ForEach-Object {$_.Delete();}" NOT engines:ransome
 ```
-### RMM
+
+#### RMM
 
 Enabling RDP
 ```
@@ -142,8 +143,9 @@ behaviour_command_executions:"Set-ItemProperty -Path 'HKLM:\System\CurrentContro
 ```
 
 RDP - Disabling NLA
+```
 behaviour_registry:"HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\UserAuthentication"
-
+```
 
 ## Brand / Domain Monitoring
 
