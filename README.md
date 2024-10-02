@@ -13,7 +13,13 @@ The image below from VirusTotal's blog provides the basis of how information is 
 <a href="https://blog.virustotal.com/2024/08/VT-S1-EffectiveResearch.html">Exploring the VirusTotal Dataset</a>
 </p>
 
-This document will list searches that are relevant for threat hunting on VT. 
+This document will list searches that are relevant for threat hunting on VT.  
+Separate files will focus on the different VT Corpus set.  
+
+README_FILE.MD = files, 
+README_DOMAINS_URLS.MD for domains and URLs,
+README_IP = IP Address
+
 
 ## General Searches
 
@@ -77,78 +83,5 @@ Content / Binary Seaches
 content:"{ 46 69 6C 65 43 6F 6E 74 61 69 6E 65 72 2E 46 69 6C 65 41 72 63 68 69 76 65 }"
 ```
 
-## Hunting Behaviours
 
-Files hosted on a .gov with at least 5 detections
-```
-itw:"*.gov" p:5+
-```
 
-Files communicating with IP address
-```
-behaviour:"8.8.8.8"
-```
-
-Files communicating with microsoft.com (alternative method that's more precise)
-```
-behaviour_network:"microsoft.com"
-```
-
-Suspicious powershell useage <br>
-_(note that VT doesn't have parent-child links in the search modifiers. It could very well be a separate process in the search below, though rare)_
-```
-behaviour_files:"-enc" OR behaviour_files:"FromBase64String"
-
-(behaviour_command_executions:powershell.exe AND (behaviour_created_processes:rundll32.exe OR behaviour_created_processes:powershell.exe))
-```
-
-Suspicious LOLbins
-```
-behaviour_processes:"certutil -urlcache -split -f http"
-
-behaviour_processes:"mshta *.hta"
-
-behaviour_created_processes: 
-```
-
-Hunting for RDP misuse <br>
-_(enabling RDP, disabling NLA)_
-```
-behaviour_command_executions:"Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -value 0"
-
-behaviour_registry:"HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\UserAuthentication"
-```
-
-Files that run specific processes <br>
-_(this example hunts for known ransomware behaviours - deleting shadow copies)_
-```
-behaviour_processes:"\\vssadmin.exe delete shadows /all /quiet"
-
-behaviour_processes:"\\vssadmin.exe resize shadowstorage"
-
-behaviour_command_executions:"Get-WmiObject Win32_Shadowcopy | ForEach-Object {$_.Delete();}" NOT engines:ransome
-```
-
-## Brand / Domain Monitoring
-
-Searching for any URLs that have been categorised or detected as phishing
-```
-entity:url (engines:phishing or category:phishing)
-```
-
-Searching for typo-squatting domains (leverging fuzzy searches) that looks like Googles but not from the legitimate Google domain
-```
-entity:domain fuzzy_domain:google.com NOT parent_domain:google.com
-```
-
-Searching for websites that uses the same favicon as a brand's page:
-```
-entity:domain p:1+ main_icon_dhash:"f8e4f23369f0b2f0"
-
-entity: domain (fuzzy_domain:facebook.com OR main_icon_dhash:"f8e4f23369f0b2f0") NOT parent_domain:facebook.com 
-```
-
-Leveraging tags to hunt for multiple-redirects
-```
-entity:url tag:multiple-redirects (fuzzy_hostname:www.microsoft.com NOT (parent_domain:microsoft.com)) response_code:200
-```
