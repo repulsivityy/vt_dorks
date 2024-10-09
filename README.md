@@ -131,8 +131,12 @@ _(this example hunts for known ransomware behaviours - deleting shadow copies)_
 behaviour_processes:"\\vssadmin.exe delete shadows /all /quiet"
 
 behaviour_processes:"\\vssadmin.exe resize shadowstorage"
+```
 
-behaviour_command_executions:"Get-WmiObject Win32_Shadowcopy | ForEach-Object {$_.Delete();}" NOT engines:ransome
+Files with specific command executions
+_(this hunts for command line execution using the "get-wmiobject" command)_
+```
+behaviour_command_executions:"Get-WmiObject Win32_Shadowcopy | ForEach-Object {$_.Delete();}" NOT engines:ransom
 ```
 
 ### RMM
@@ -145,6 +149,11 @@ behaviour_command_executions:"Set-ItemProperty -Path 'HKLM:\System\CurrentContro
 RDP - Disabling NLA
 ```
 behaviour_registry:"HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\UserAuthentication"
+```
+
+TeamViewer network activity: 
+```
+behaviour_network:"*.teamviewer.com"
 ```
 
 ## Brand / Domain Monitoring
