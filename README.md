@@ -75,6 +75,16 @@ Searching for email attachments
 entity:file tag:attachment
 ```
 
+Search for all macOS (macho or dmg) malware
+```
+entity:file type:macho engines:malicious
+```
+
+Search for all malicious linux executables found 
+```
+entity:file type:elf engines:malicious
+```
+
 ## Hunting with Content Searches 
 
 Files with specific strings: 
@@ -141,7 +151,7 @@ behaviour_command_executions:"Get-WmiObject Win32_Shadowcopy | ForEach-Object {$
 
 ### RMM
 
-Enabling RDP
+RDP being enabled
 ```
 behaviour_command_executions:"Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -value 0"
 ```
