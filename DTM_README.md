@@ -108,17 +108,21 @@ AND subject.raw:"G Alts Shop"
 Tracking a specific persona named intel broker
 
 ```
-__type:forum_post AND author.identity.name:"IntelBroker"
+__type:forum_post 
+AND author.identity.name:"IntelBroker"
 ```
 
 Tracking telegram channel 
 ```
-__type:message AND (channel.name:"Scattered Lapsus$ Hunter")
+__type:message 
+AND (channel.name:"Scattered Lapsus$ Hunter")
 ```
 
 ## Others
 Exploits targeting ICS/OT Vulnerabilities
 
 ```
-(__type:forum_post OR __type:messages) AND (ICS OR OT OR "industrial control") AND ((exploit OR vulnerability OR CVE OR metasploit OR shodan) OR ((modbus OR DNP3 OR profinet) AND (ICS OR OT OR "industrial control")))
+(__type:forum_post OR __type:messages) 
+AND (ICS OR OT OR "industrial control") 
+AND ((exploit OR vulnerability OR CVE OR metasploit OR shodan) OR ((modbus OR DNP3 OR profinet) AND (ICS OR OT OR "industrial control")))
 ```
